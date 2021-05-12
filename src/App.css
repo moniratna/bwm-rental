@@ -40,3 +40,32 @@
     font-size: 14px; }
     .navbar .dropdown-menu .dropdown-item:active {
       background-color: #61dafb; }
+
+#rentalListing .title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px; }
+
+#rentalListing .bwm-card {
+  border: none; }
+  #rentalListing .bwm-card .card-block {
+    padding-top: 8px; }
+    #rentalListing .bwm-card .card-block .card-subtitle {
+      margin: 0;
+      font-weight: 500;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #16861a; }
+    #rentalListing .bwm-card .card-block .card-title {
+      font-size: 19px;
+      margin: 3px 0; }
+    #rentalListing .bwm-card .card-block .card-text {
+      font-size: 14px;
+      font-weight: 300;
+      color: #332525;
+      margin-bottom: 0; }
+
+.page-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px; }
