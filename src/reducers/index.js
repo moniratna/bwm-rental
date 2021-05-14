@@ -1,16 +1,16 @@
-import * as redux from 'redux';
 import thunk from 'redux-thunk';
 import { rentalReducer, selectedRentalReducer } from './rental-reducer';
-
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 
 export const init = () =>{
-    const reducer = redux.combineReducers({
+    const reducer = combineReducers({
         rentals: rentalReducer,
         rental: selectedRentalReducer
     });
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
-    const store =redux.createStore(reducer, redux.applyMiddleware(thunk));
+    const store =createStore(reducer,composeEnhancers(applyMiddleware(thunk)));
 
     return store;
 }
