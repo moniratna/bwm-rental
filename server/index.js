@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Rental = require('./models/rental');
+const rentalRoutes = require('./routes/rentals');
+
 
 require('dotenv').config()
 
@@ -16,6 +18,8 @@ mongoose.connect(DB_URI,
     );
 
 const app = express();
+
+app.use('/api/v1/rentals', rentalRoutes);
 
 app.get('/rentals', (req,res)=>{
     res.send({'success':true});
