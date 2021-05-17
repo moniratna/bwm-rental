@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Rental = require('./models/rental');
 const rentalRoutes = require('./routes/rentals');
+const FakeDb = require('./fakedb');
 
 
 require('dotenv').config()
@@ -15,7 +16,10 @@ mongoose.connect(DB_URI,
     useUnifiedTopology: true,
     useFindAndModify: false,
     useCreateIndex: true}
-    );
+    ).then(()=>{
+        const fakeDb = new FakeDb();
+        fakeDb.seedDb();
+    });
 
 const app = express();
 
