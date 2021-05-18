@@ -37,7 +37,7 @@ class FakeDb {
         this.rentals.forEach((rental)=>{
             const newRental = new Rental(rental);
 
-            newRental.save();
+            // newRental.save();
         })
     }
     seedDb(){

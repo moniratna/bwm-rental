@@ -25,10 +25,6 @@ const app = express();
 
 app.use('/api/v1/rentals', rentalRoutes);
 
-app.get('/rentals', (req,res)=>{
-    res.send({'success':true});
-})
-
 const PORT = 3001;
 
 app.listen(PORT, ()=>{
