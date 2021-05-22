@@ -10,6 +10,21 @@ class RentalDetails extends Component {
         const rentalId = this.props.match.params.id
         this.props.dispatch(actions.fetchRentalById(rentalId));
     }
+
+    getLocation(pos) {
+        let succeed = function(pos){
+            console.log(pos.coords);
+        }
+        let failure = function(err){
+            console.log(err);
+        }
+        let options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge:0
+        };
+        navigator.geolocation.getCurrentPosition(succeed,failure, options)
+    }
     render() {
         const rental = this.props.rental;
         if(rental._id) {
@@ -21,6 +36,7 @@ class RentalDetails extends Component {
                         <div className='col-md-6'>
                             <img src={rental.image} alt=''></img>
                         </div>
+                        
                         <div className='col-md-6'>
                         <RentalMap location={`${rental.city}, ${rental.street}`} />
                         </div>
