@@ -1,5 +1,5 @@
 const User = require('../models/user');
-
+const { normalizeErrors } = require('../helpers/mongoose');
 exports.auth = function(req,res){
 
 }
@@ -15,7 +15,7 @@ exports.register = function(req,res){
     }
     User.findOne({email}, (err,existingUser)=>{
         if (err){
-            return res.status(422).send({"mongoose":"will later"});
+            return res.status(422).send({errors: normalizeErrors(err.errors)});
         }
         if(existingUser) {
             return res.status(422).send({errors:[{title: 'invalid email', detail: "User with this email already exist!"}]});
@@ -27,7 +27,7 @@ exports.register = function(req,res){
         });
         user.save((err)=>{
             if(err) {
-                return res.status(422).send({"mongoose":"handle mongoose error in next"})
+                return res.status(422).send({errors: normalizeErrors(err.errors)})
             }
             return res.json({'registered':true});
         });
