@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import RegisterForm from './RegisterForm';
-import * as actions from '../../actions'
+import * as actions from '../../actions';
+import {Redirect } from 'react-router-dom';
+
 
 
 export default class Register extends Component {
@@ -8,7 +10,8 @@ export default class Register extends Component {
         super();
 
         this.state = {
-            errors: []
+            errors: [],
+            redirect: false
         }
         this.registerUser = this.registerUser.bind(this);
     }
@@ -16,7 +19,7 @@ export default class Register extends Component {
         console.log(userData);
         actions.register(userData.username, userData.email, userData.password, userData.passwordConfirmation).then(
             (registered) => {
-                debugger;
+                this.setState({redirect:true});
             },
             (errors) => {
                 this.setState({errors});
@@ -24,8 +27,11 @@ export default class Register extends Component {
         );
     }
     render() {
-        const { errors } = this.state;
+        const { errors, redirect } = this.state;
         // alert(errors);
+        if(redirect) {
+            return <Redirect to={{pathname: '/login', state:{successRegister: true}}} />
+        }
 
         return (
             <section id='register'>
