@@ -21,7 +21,7 @@ const renderField = ({
   )
 
 const RegisterForm = props => {
-  const { handleSubmit, pristine, reset, submitting,submitCb } = props
+  const { handleSubmit, pristine, reset, submitting,submitCb, valid, errors } = props
   return (
     <form onSubmit={handleSubmit(submitCb)}>
       
@@ -50,16 +50,22 @@ const RegisterForm = props => {
             component={renderField}
           />
           <Field
-            name="confirmPassword"
+            name="passwordConfirmation"
             component="input"
             type="password"
             label="Confirm Password"
             className="form-control"
             component={renderField}
           />
-        <button className="btn btn-bwm btn-form" type="submit" disabled={pristine || submitting}>
+        <button className="btn btn-bwm btn-form" type="submit" disabled={!valid || pristine || submitting}>
           Submit
         </button>
+        {
+            errors.length > 0 && 
+            <div className='alert-alert-danger bwm-res-errors'>
+                {errors.map((error,index)=> <p key={index}>{error.detail}</p>)}
+            </div>
+        }
     </form>
   )
 }
@@ -71,10 +77,10 @@ const validate = values => {
     if(!values.email){
         errors.email = 'Please enter email';
     }
-    if(!values.confirmPassword){
-        errors.password = 'please enter confirm password';
+    if(!values.passwordConfirmation){
+        errors.passwordConfirmation = 'please enter confirm password';
     }
-    if(values.password !== values.confirmPassword){
+    if(values.password !== values.passwordConfirmation){
         errors.password = 'Password must be same';
     }
     return errors

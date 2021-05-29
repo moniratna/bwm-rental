@@ -4,7 +4,7 @@ import {FETCH_RENTALS,
         FETCH_RENTAL_BY_ID_INIT,
         FETCH_RENTALS_SUCCESS } from './types';
 
-
+// renals actions
 const fetchRentalByIdInit = () =>{
   return {
     type: FETCH_RENTAL_BY_ID_INIT
@@ -44,4 +44,18 @@ export const fetchRentalById = (rentalId) =>{
     );
   }
     
+}
+
+// auth actions
+export const register = (username, email, password, passwordConfirmation) => {
+  const body = {username, email, password, passwordConfirmation}
+  console.log(body);
+  return axios.post('/api/v1/users/register',body).then(
+    (res) => {
+      return res.data;
+    },
+    (err) => {
+      return Promise.reject(err.response.data.errors)
+    }
+  )
 }
