@@ -1,8 +1,12 @@
 import axios from 'axios';
+import authService from '../services/auth-service'
+
 import {FETCH_RENTALS,
         FETCH_RENTAL_BY_ID_SUCCESS,
         FETCH_RENTAL_BY_ID_INIT,
-        FETCH_RENTALS_SUCCESS } from './types';
+        FETCH_RENTALS_SUCCESS,
+        LOGIN_SUCCESS,
+        LOGIN_FAILURE } from './types';
 
 // renals actions
 const fetchRentalByIdInit = () =>{
@@ -58,4 +62,40 @@ export const register = (username, email, password, passwordConfirmation) => {
       return Promise.reject(err.response.data.errors)
     }
   )
+}
+
+const loginSuccess = () =>{
+  return{
+    type: LOGIN_SUCCESS,
+  }
+}
+const loginFailure = (errors) =>{
+  return{
+    type: LOGIN_FAILURE,
+    errors
+  }
+}
+
+export const checkAuthState = () =>{
+  return dispatch => {
+    if(authService.isAuthenticated()) {
+      dispatch(loginSuccess());
+    }
+  }
+}
+
+export const login = (email,password) => {
+  const body = {email, password}
+
+  return dispatch => {
+    return axios.post('api/v1/users/auth', body)
+    .then(res =>res.data)
+    .then(token=>{
+      localStorage.setItem('auth_token', token);
+      dispatch(loginSuccess());
+    })
+    .catch(({response})=>{
+      dispatch(loginFailure(response.data.errors));
+    })
+  }
 }

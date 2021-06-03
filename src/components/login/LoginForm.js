@@ -1,5 +1,6 @@
 import React from 'react'
 import { clearSubmitErrors, Field, reduxForm } from 'redux-form'
+import {required, minLength4} from '../../shared/validators';
 
 
 const renderField = ({
@@ -21,7 +22,7 @@ const renderField = ({
   )
 
 const LoginForm = props => {
-  const { handleSubmit, pristine, reset, submitting,submitCb, valid } = props
+  const { handleSubmit, pristine, reset, submitting,submitCb, valid, errors } = props
   return (
     <form onSubmit={handleSubmit(submitCb)}>
           <Field
@@ -31,6 +32,7 @@ const LoginForm = props => {
             label="Email"
             className="form-control"
             component={renderField}
+            validate = {[required, minLength4]}
           />
           <Field
             name="password"
@@ -39,10 +41,17 @@ const LoginForm = props => {
             label="Password"
             className="form-control"
             component={renderField}
+            validate = {[required, minLength4]}
           />
         <button className="btn btn-bwm btn-form" type="submit" disabled={!valid || pristine || submitting}>
           Submit
         </button>
+        {
+            errors.length > 0 && 
+            <div className='alert-alert-danger bwm-res-errors'>
+                {errors.map((error,index)=> <p key={index}>{error.detail}</p>)}
+            </div>
+        }
     </form>
   )
 }

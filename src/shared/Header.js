@@ -16,8 +16,8 @@ export default function Header() {
                 </button>
                 <div className='collapse navbar-collapse' id='navbarNavAltMarkup'>
                     <div className='navbar-nav ml-auto'>
-                    <a className="nav-item nav-link active" href="">Login</a>
-                    <a className="nav-item nav-link" href="">Register</a>
+                    <Link className="nav-item nav-link active" to="/login">Login</Link>
+                    <Link className="nav-item nav-link" to="/register">Register</Link>
                     </div>
                 </div>
             </div>
