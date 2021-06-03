@@ -1,6 +1,6 @@
 import axios from 'axios';
 import authService from '../services/auth-service'
-
+import axiosService from '../services/axios-service';
 import {FETCH_RENTALS,
         FETCH_RENTAL_BY_ID_SUCCESS,
         FETCH_RENTAL_BY_ID_INIT,
@@ -10,6 +10,10 @@ import {FETCH_RENTALS,
         LOGOUT } from './types';
 
 // renals actions
+
+const axiosInstance = axiosService.getInstance();
+
+
 const fetchRentalByIdInit = () =>{
   return {
     type: FETCH_RENTAL_BY_ID_INIT
@@ -30,7 +34,7 @@ const fetchRentalSuccess = (rentals) =>{
 
 export const fetchRentals = () =>{
   return dispatch =>{
-    axios.get('/api/v1/rentals')
+    axiosInstance.get('/rentals')
     .then(res => res.data)
     .then(rentals =>(dispatch(fetchRentalSuccess(rentals)))
     );
