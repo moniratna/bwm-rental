@@ -139,6 +139,9 @@
   .bwm-res-errors p {
     margin-bottom: 5px; }
 
+.clickable:hover {
+  cursor: pointer; }
+
 .page-title {
   font-size: 30px;
   font-weight: 700;

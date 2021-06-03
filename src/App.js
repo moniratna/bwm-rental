@@ -10,6 +10,8 @@ import { Component } from 'react';
 import Login from './components/login/Login';
 import Register from './components/register/Register';
 import * as actions from './actions';
+import ProtectedRoutes from './shared/auth/ProtectedRoutes';
+import LoggedInRoute from './shared/auth/LoggedInRoute';
 
 
 const store = require('./reducers').init()
@@ -39,9 +41,9 @@ class App extends Component {
             <div className="container">
               <Route exact path='/' render={() => <Redirect to='/rentals' /> } />
               <Route exact path='/rentals' component={RentalList} />
-              <Route exact path='/rentals/:id' component={RentalDetails} />
+              <ProtectedRoutes exact path='/rentals/:id' component={RentalDetails} />
               <Route exact path='/login' component={Login} />
-              <Route exact path='/register' component={Register} />
+              <LoggedInRoute exact path='/register' component={Register} />
             </div>
           </div>
         </BrowserRouter>
