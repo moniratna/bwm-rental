@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-export default function Header() {
+export default function Header(props) {
     return (
         <div className="navbar navbar-dark navbar-expand-lg">
             <div className="container">
@@ -18,6 +18,7 @@ export default function Header() {
                     <div className='navbar-nav ml-auto'>
                     <Link className="nav-item nav-link active" to="/login">Login</Link>
                     <Link className="nav-item nav-link" to="/register">Register</Link>
+                    <p className='nav-item nav-link' onClick={props.logout}>Logout</p>
                     </div>
                 </div>
             </div>

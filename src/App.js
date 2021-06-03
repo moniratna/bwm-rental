@@ -24,6 +24,10 @@ class App extends Component {
     store.dispatch(actions.checkAuthState());
   }
 
+  logout(){
+    store.dispatch(actions.logout());
+  }
+
 
 
   render(){
@@ -31,7 +35,7 @@ class App extends Component {
       <Provider store={store}>
         <BrowserRouter>
           <div className="App">
-            <Header />
+            <Header logout={this.logout} />
             <div className="container">
               <Route exact path='/' render={() => <Redirect to='/rentals' /> } />
               <Route exact path='/rentals' component={RentalList} />

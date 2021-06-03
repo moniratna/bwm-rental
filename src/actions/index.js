@@ -6,7 +6,8 @@ import {FETCH_RENTALS,
         FETCH_RENTAL_BY_ID_INIT,
         FETCH_RENTALS_SUCCESS,
         LOGIN_SUCCESS,
-        LOGIN_FAILURE } from './types';
+        LOGIN_FAILURE,
+        LOGOUT } from './types';
 
 // renals actions
 const fetchRentalByIdInit = () =>{
@@ -91,11 +92,17 @@ export const login = (email,password) => {
     return axios.post('api/v1/users/auth', body)
     .then(res =>res.data)
     .then(token=>{
-      localStorage.setItem('auth_token', token);
+      authService.saveToken(token)
       dispatch(loginSuccess());
     })
     .catch(({response})=>{
       dispatch(loginFailure(response.data.errors));
     })
+  }
+}
+export const logout = () => {
+  authService.invalidateUser();
+  return {
+    type: LOGOUT,
   }
 }
