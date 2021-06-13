@@ -1,16 +1,17 @@
 import React from 'react';
+// import rental from '../../../server/models/rental';
 
 export class Booking extends React.Component {
 
   render() {
-
+    const {rental} = this.props;
     return (
       <div className='booking'>
-        <h3 className='booking-price'>$ 24 HARDCODED <span className='booking-per-night'>per night</span></h3>
+        <h3 className='booking-price'>${rental.dailyRate} <span className='booking-per-night'>per night</span></h3>
         <hr></hr>
         <div className='form-group'>
         <label htmlFor='dates'>Dates</label>
-          HERE WILL BE CALENDAR
+          
         </div>
         <div className='form-group'>
           <label htmlFor='guests'>Guests</label>

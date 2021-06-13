@@ -51,7 +51,7 @@ class RentalDetails extends Component {
                         </div>
                         <div className='col-md-4'>
                              BOOKING
-                             <Booking />
+                             <Booking rental = {rental} />
                         </div>
                         </div>
                     </div>
