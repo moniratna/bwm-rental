@@ -1,5 +1,6 @@
 import moment from 'moment';
 import React from 'react';
+import BookingModal from './BookingModal';
 // import rental from '../../../server/models/rental';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import { getRangeOfDates } from '../../helpers';
@@ -11,13 +12,21 @@ export class Booking extends React.Component {
     this.dateRef = React.createRef();
 
     this.state = {
-      startAt: '',
-      endAt: '',
-      guests: 0
+      proposedBooking: {
+        startAt: '',
+        endAt: '',
+        guests: 0,
+      },
+      modal: {
+        open: false
+      }
+      
+      
     }
 
     this.checkInvalidDates = this.checkInvalidDates.bind(this);
     this.handleApply = this.handleApply.bind(this);
+    this.cancelConfirmation = this.cancelConfirmation.bind(this);
   }
   componentWillMount(){
     this.getBookedOutDates();
@@ -42,17 +51,34 @@ export class Booking extends React.Component {
     this.dateRef.current.value = startAt + ' to ' + endAt;
 
     this.setState({
-      startAt,
-      endAt
+      proposedBooking: {
+        startAt,
+        endAt
+      }
+      
     });
-    console.log();
   }
   selectGuests(e){
     this.setState({
-      guests: parseInt(e.target.value)
+      proposedBooking: {
+        guests: parseInt(e.target.value)
+      }
+      
     })
   }
-  reserve(){
+  cancelConfirmation(){
+    this.setState({
+      modal: {
+        open: false
+      }
+    })
+  }
+  confirmProposedData(){
+    this.setState({
+      modal: {
+        open: true
+      }
+    })
     console.log(this.state);
   }
 
@@ -75,12 +101,13 @@ export class Booking extends React.Component {
           <input onChange={(e)=>{this.selectGuests(e)}} 
           type='number' className='form-control' id='guests' aria-describedby='emailHelp' placeholder=''></input>
         </div>
-        <button onClick={()=>{this.reserve()}} className='btn btn-bwm btn-confirm btn-block'>Reserve place now</button>
+        <button onClick={()=>{this.confirmProposedData()}} className='btn btn-bwm btn-confirm btn-block'>Reserve place now</button>
         <hr></hr>
         <p className='booking-note-title'>People are interested into this house</p>
         <p className='booking-note-text'>
           More than 500 people checked this rental in last month.
         </p>
+        <BookingModal open={this.state.modal.open} closeModal = {this.cancelConfirmation} />
       </div>
     )
   }
