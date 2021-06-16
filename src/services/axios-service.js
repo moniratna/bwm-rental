@@ -16,7 +16,7 @@ class AxiosService {
                 const token = authService.getToken();
 
                 if(token) {
-                    config.headers.Authorization = `Bearer ${token}`;
+                    config.headers.authorization = `Bearer ${token}`;
                 }
                 return config;
             }

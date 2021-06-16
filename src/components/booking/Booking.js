@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 // import rental from '../../../server/models/rental';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import { getRangeOfDates } from '../../helpers';
-import * as actions from '../../actions/index';
+import * as actions from '../../actions';
 
 
 export class Booking extends React.Component {
@@ -13,12 +13,13 @@ export class Booking extends React.Component {
     super();
     this.bookedOutDates = [];
     this.dateRef = React.createRef();
-
+    // const { _id } = this.props.rental;
     this.state = {
       proposedBooking: {
         startAt: '',
         endAt: '',
         guests: '',
+        rental:{}
       },
       modal: {
         open: false
@@ -84,7 +85,7 @@ export class Booking extends React.Component {
     const dateRange = getRangeOfDates(booking.startAt, booking.endAt);
     this.bookedOutDates.push(...dateRange);
   }
-  reserDate() {
+  reserveDate() {
     this.dateRef.current.value = '';
     this.setState({
       proposedBooking: {guests: ''}
@@ -93,28 +94,35 @@ export class Booking extends React.Component {
   confirmProposedData(){
     const {startAt, endAt} = this.state.proposedBooking;
     const days = getRangeOfDates(startAt, endAt).length - 1;
-    const {rental} = this.props;
+    const {_id,dailyRate} = this.props.rental
 
 
     this.setState({
       proposedBooking: {
         ...this.state.proposedBooking,
         days,
-        totalPrice: days * rental.dailyRate,
-        rental,
+        totalPrice: days * dailyRate,
+        rental:{_id}
       },
       modal: {
         open: true
       }
     })
-    console.log(this.state);
+    console.log(this.state.proposedBooking);
+    // console.log(rental["_id"]);
   }
   reserveRental() {
-    actions.createBooking(this.state.proposedBooking).then(
-      (booking)=>{
-        this.addNewBookedOutDates(booking);
+    actions.createBooking(this.state.proposedBooking.startAt,
+      this.state.proposedBooking.endAt,
+      this.state.proposedBooking.days,
+      this.state.proposedBooking.guests,
+      this.state.proposedBooking.totalPrice,
+      this.state.proposedBooking.rental).then(
+      (data)=>{
+
+        this.addNewBookedOutDates(data);
         this.cancelConfirmation();
-        this.reserDate();
+        this.reserveDate();
         toast.success('Booking has been successfully created! ')
       },
       (errors)=>{

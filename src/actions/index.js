@@ -111,8 +111,17 @@ export const logout = () => {
   }
 }
 
-export const createBooking = (booking) =>{
-  return axiosInstance.post('/bookings', booking)
-    .then(res => res.data)
-    .catch(({response})=>Promise.reject(response.data.errors))
+export const createBooking = (startAt,endAt,days,guests, totalPrice,rental) =>{
+  const body = {startAt, endAt, days, guests, totalPrice,rental}
+  console.log(body);
+  const token = authService.getToken();
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }
+  return axios.post('/api/v1/bookings',body,config)
+              .then(res=> res.data)
+              .catch(({response}) => Promise.reject(response.data.errors))
 }
