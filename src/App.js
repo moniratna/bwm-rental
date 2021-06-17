@@ -12,6 +12,7 @@ import Register from './components/register/Register';
 import * as actions from './actions';
 import ProtectedRoutes from './shared/auth/ProtectedRoutes';
 import LoggedInRoute from './shared/auth/LoggedInRoute';
+import RentalSearchListing from './components/rental/RentalSearchListing';
 
 
 const store = require('./reducers').init()
@@ -41,6 +42,7 @@ class App extends Component {
             <div className="container">
               <Route exact path='/' render={() => <Redirect to='/rentals' /> } />
               <Route exact path='/rentals' component={RentalList} />
+              <Route exact path='/rentals/:city/homes' component={RentalSearchListing} />
               <ProtectedRoutes exact path='/rentals/:id' component={RentalDetails} />
               <Route exact path='/login' component={Login} />
               <LoggedInRoute exact path='/register' component={Register} />
