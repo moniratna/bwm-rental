@@ -53,12 +53,12 @@ router.post('',UserCtrl.authMiddleware, function(req,res){
     const user = res.locals.user;
 
     const rental = new Rental({title, city, street, category, image, shared, bedrooms, description,dailyRate});
-
-    Rental.create(rental, function(err, newRenal){
+    rental.user = user;
+    Rental.create(rental, function(err, newRental){
         if(err){
             return res.status(422).send({errors: normalizeErrors(err.errors)});
         }
-        User.update({_id: user.id},{$push:{rentals: newRental}});
+        User.update({_id: user.id},{$push:{rentals: newRental}}, function(){});
 
         return res.json(newRental);
     })
